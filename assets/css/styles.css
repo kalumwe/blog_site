@@ -1,0 +1,52 @@
+#header {
+  		height: 120px;
+  	}
+
+  	#navBar {
+  		margin-top: 30px;
+  	}
+
+  	#envelope {
+  		margin-right: 30px;
+  	}
+  	.bi-envelope, .bi-phone {
+  		padding-right: 5px;
+  		color: var(--color-orangeRed);
+  	}
+  	.text-orangeRed {
+  		color: var(--color-orangeRed);
+  	}
+
+  	.mobile-nav-toggle {
+  		margin-left: 17px;
+  	}
+
+    .reply-btn {
+      font-size: 12px;
+      padding: 6px 17px;
+      font-weight: 400;
+      border: 1px solid #eee;
+    }
+
+    .reply-btn:hover {
+      color: var(--color-orangeRed);
+      border: 1px solid rgb(245, 99, 75, 0.15);
+    }
+
+    .replyForm {
+      display: none;
+    }
+
+    .bi-search {
+      border-style: none;
+
+    }
+
+    #bi-search {
+      background-color: #fff;
+    }
+
+    #welcome_user {
+      margin-left: 2rem;
+      
+    }

@@ -1,0 +1,394 @@
+#sidenavAccordion a:hover,
+        #sidenavAccordion .active, #kalublog {
+        color: rgb(245, 99, 75);
+}
+        
+
+.card {
+  border-radius: 12px;
+  box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15);
+  background-color: #FFFFFF;
+  color: #252422;
+  margin-bottom: 20px;
+  position: relative;
+  border: 0 none;
+  transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 200ms ease; }
+
+
+.card .card-image {
+    width: 100%;
+    overflow: hidden;
+    height: 260px;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.card .card-image img {
+    width: 100%;
+}
+
+.card .filter {
+    position: absolute;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.68);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.card .filter .btn {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.card:hover .filter {
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
+.card .btn-hover {
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.card:hover .btn-hover {
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
+.card .card-body {
+    padding: 15px 15px 10px 15px;
+}
+
+.card .card-header {
+    padding: 15px 15px 0;
+    background-color: #FFFFFF;
+    border-bottom: none !important;
+}
+
+.card .card-category,
+.card label {
+    font-size: 14px;
+    font-weight: 400;
+    color: #9A9A9A;
+    margin-bottom: 0px;
+}
+
+.card .card-category i,
+.card label i {
+    font-size: 16px;
+}
+
+.card label {
+    font-size: 12px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.card .card-title {
+    margin: 0;
+    color: #333333;
+    font-weight: 500;
+}
+
+.card .avatar {
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: 5px;
+
+}
+
+.card .description {
+    font-size: 14px;
+    color: #333;
+}
+
+        .card-stats .card-body {
+           padding: 15px 15px 0px;
+           border-radius: 25px;
+        }
+
+        .card-stats .card-body .numbers {
+           font-size: 1.8rem;
+           text-align: left;
+        }
+
+       .card-stats .card-body .numbers p {
+           margin-bottom: 0;
+        }
+
+        .card-stats .card-footer {
+           padding: 0px 15px 10px 15px;
+        }
+
+        .card-stats .icon-big {
+          font-size: 3em;
+          min-height: 64px;
+        }
+
+        .card-stats .icon-big i {
+        font-weight: 700;
+        line-height: 59px;
+        }
+
+        .card .card-footer {
+    padding-top: 0;
+    background-color: transparent;
+    line-height: 30px;
+    border-top: none !important;
+    font-size: 14px;
+}
+
+.card .card-footer .legend {
+    padding: 5px 0;
+}
+
+.card .card-footer hr {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.card .stats {
+    color: #a9a9a9;
+}
+
+.card .card-footer div {
+    display: inline-block;
+}
+
+.card .author {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.card .author i {
+    font-size: 14px;
+}
+
+.card h6 {
+    font-size: 12px;
+    margin: 0;
+}
+
+.card.card-separator:after {
+    height: 100%;
+    right: -15px;
+    top: 0;
+    width: 1px;
+    background-color: #DDDDDD;
+    card-body: "";
+    position: absolute;
+}
+
+.card .ct-chart {
+    margin: 30px 0 30px;
+    height: 245px;
+}
+
+.card .ct-label {
+    font-size: 1rem !important;
+}
+
+.card .table tbody td:first-child,
+.card .table thead th:first-child {
+    padding-left: 15px;
+}
+
+.card .table tbody td:last-child,
+.card .table thead th:last-child {
+    padding-right: 15px;
+    display: inline-flex;
+}
+
+.card .alert {
+    border-radius: 4px;
+    position: relative;
+}
+
+.card .alert.alert-with-icon {
+    padding-left: 65px;
+}
+
+.card-stats .card-body {
+    padding: 15px 15px 0px;
+}
+
+.card-stats .card-body .numbers {
+    font-size: 1.8rem;
+    text-align: left;
+}
+
+.card-stats .card-body .numbers p {
+    margin-bottom: 0;
+}
+
+.card-stats .card-footer {
+    padding: 0px 15px 10px 15px;
+}
+
+.card-stats .icon-big {
+    font-size: 3em;
+    min-height: 64px;
+}
+
+.card-stats .icon-big i {
+    font-weight: 700;
+    line-height: 59px;
+}
+
+.card-user .card-image {
+    height: 170px;
+}
+.card-user .image {
+  height: 200px; 
+}
+  .card-user .image img {
+    border-radius: 12px;
+ }
+
+
+.card-user .card-image-plain {
+    height: 0;
+    margin-top: 110px;
+}
+
+.card-user .author {
+    text-align: center;
+    text-transform: none;
+    margin-top: 0px;
+}
+
+.card-user .author a + p.description {
+    margin-top:0px; 
+}
+
+.card-user .avatar {
+    width: 124px;
+    height: 124px;
+    border: 5px solid #FFFFFF;
+    position: relative;
+    margin-bottom: 15px;
+    margin-top: -50px;
+}
+
+.card-user .avatar.border-gray {
+    border-color: #EEEEEE;
+}
+
+.card-user .title {
+    line-height: 24px;
+}
+
+.card-user .card-body {
+    min-height: 240px;
+}
+
+
+.card-user hr {
+  margin: 5px 15px 15px; }
+
+
+.card-user .card-footer,
+.card-price .card-footer {
+    padding: 5px 15px 10px;
+}
+
+.card-user hr,
+.card-price hr {
+    margin: 5px 15px;
+}
+
+.card-plain {
+    background-color: transparent;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.card-plain .card-image {
+    border-radius: 4px;
+}
+
+.card.card-plain {
+    border: none !important;
+}
+
+.card.card-plain .card-header {
+    background-color: transparent !important;
+}
+
+.card-user form .form-group {
+  margin-bottom: 20px;
+   }
+
+ card-user .card-body + .card-footer {
+  padding-top: 0; }
+
+.card-user .card-footer h5 {
+  font-size: 1.25em;
+  margin-bottom: 0; 
+}
+
+.card-user .button-container {
+  margin-bottom: 6px;
+  text-align: center; 
+}
+
+h5, .h5 {
+  font-size: 1.57em;
+  line-height: 1.4em;
+  margin-bottom: 15px;
+  font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+ }
+
+.card-body a {
+  color: #51cbce; 
+  text-decoration: none;
+}
+
+.btn-round {
+  border-width: 1px;
+  border-radius: 30px;
+  padding-right: 23px;
+  padding-left: 23px;
+   }
+
+.btn-round.btn-simple {
+    padding: 10px 22px; 
+}
+
+
+#progressBar {
+    width: 100%;
+    height: 7px;
+    
+  }
+  
+  .weak {
+    background-color: #ff4d4d;
+  }
+  
+  .medium {
+    background-color: #ffad4d;
+  }
+  
+  .strong {
+    background-color: #4dff4d;
+  }
+
