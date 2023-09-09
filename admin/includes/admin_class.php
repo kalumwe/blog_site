@@ -587,11 +587,11 @@ Class Action {
 		    }
 			if (!in_array($_FILES['img']['type'], $this->permitted)) {
 				header("Content-Type: application/json");
-				return json_encode(array('status'=>0, 'message'=>'Can\'t update details. Not Image type.'));
+				return json_encode(array('status'=>0, 'message'=>' Not Image type.'));
 			}
 			if (($_FILES['img']['size'] > $this->img_max_size) || (strlen($fname) > 100)) {
 			   header("Content-Type: application/json");
-			   return json_encode(array('status'=>0, 'message'=>'Can\'t update details. Image size/name too large.'));
+			   return json_encode(array('status'=>0, 'message'=>'Image size/name too large.'));
 			}
 		    $move = move_uploaded_file($_FILES['img']['tmp_name'], "C:/xampp/htdocs/blog_site/admin/assets/img/". $fname);
 		    $data .= ", profile_picture = :pic ";	
@@ -604,7 +604,7 @@ Class Action {
 			//insert data
 			$sql = "INSERT INTO author SET ".$data;
 			$stmt = $this->db->prepare($sql);
-			if (isset($fname)) {
+			if ($_FILES['img']['tmp_name'] != '') {
 				$stmt->bindParam(':pic', $fname, PDO::PARAM_STR);
 			} else {
 				// set image_id to NULL
@@ -715,6 +715,17 @@ Class Action {
 		$data .= ", category_id = :cat_id ";
 		$data .= ", author_id = :authId ";
 		$data .= ", date_published = :pdate ";
+
+		$name = $this->safe($name);
+		//$post = htmlentities(str_replace("'","&#x2019;",$post));
+		if (!empty($post)) {
+		   $post = $this->safe($post);
+		} else {
+			header("Content-Type: application/json");
+			return json_encode(array('status'=>0, 'message'=>'post field missing'));
+		}
+		$category_id = (int) $category_id;
+		$date = $this->safe($date);
 		
 		if ($_FILES['img']['tmp_name'] != '') {
 			$fname = strtotime(date('y-m-d H:i')).'_'.$_FILES['img']['name'];
@@ -786,7 +797,6 @@ Class Action {
 		} else {
 			//else update data
 			$id = (int) $id;
-			$post = htmlentities(str_replace("'","&#x2019;",$post));
 			//get old profile pic file name to delete after new one updated and id
 			$sql  = "SELECT img_path, author_id FROM posts WHERE id=".$id;
 			$query = $this->db->query($sql);

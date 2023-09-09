@@ -45,7 +45,7 @@
                                            
                                              <div class="col-lg-7 mx-lg-3 mb-5">
                                                <label for="name">Blog Title</label>
-                                                <select type="text" id="name" name="name[]" class="form-control required" multiple required>
+                                                <select type="text" id="name" name="name[]" class="form-control required" multiple >
 						                          <option value=""></option>
 						                        <?php
 						                          $post = $conn->query("SELECT * FROM posts ORDER BY title ASC");
@@ -79,7 +79,7 @@
 						                    </div>
 						                    </div>
                                           <input type="hidden" name="id" value="<?php echo isset($_GET['id']) ? (int) $_GET['id'] : '' ?>">
-                 
+                                            <div class=" my-2 ms-3 error-message" id="error-message" ></div>
 				                            <center><button type="submit" class="btn btn-primary btn-block col-md-2 px-5 my-4">Save</button></center>
                                         </form>
                                         <!--<a href="index.php?page=posts" class="prev_page  rounded-circle bg-secondary text-light">

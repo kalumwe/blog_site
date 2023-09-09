@@ -10,17 +10,24 @@ $postId = (int) $_GET['id'];
 //rederirect to home page if record id doesn't exist
 $sql ="SELECT * FROM posts WHERE id='$postId'";
 $query = $conn->query($sql);
+$row = $query->fetch();
 if ($query->rowCount() == 0) {
    header("Location: http://localhost:8080/blog_site/admin/index.php");
    exit();
 }
 
 //get all records associated with the stored get variable
-  $sql = "SELECT p.*, a.profile_picture, c.name AS category, DATE_FORMAT(p.date_published, '%b %D \'%y') AS published, 
+if (!is_null($row["author_id"])) {
+    $sql = "SELECT p.*, a.profile_picture, c.name AS category, DATE_FORMAT(p.date_published, '%b %D \'%y') AS published, 
           CONCAT(a.first_name, ' ', a.last_name) AS author_name FROM posts p INNER JOIN category c ON c.id = p.category_id 
           INNER JOIN author a ON a.id = p.author_id  WHERE p.id ='$postId'";
+} else {
+   $sql = "SELECT p.*, c.name AS category, DATE_FORMAT(p.date_published, '%b %D \'%y') AS published 
+         FROM posts p INNER JOIN category c ON c.id = p.category_id  WHERE p.id ='$postId'";    
+}
   $result = $conn->query($sql);
   $error = $conn->errorInfo()[2];
+
 
   foreach($result->fetch() as $key => $value) {
     $meta[$key] = $value;

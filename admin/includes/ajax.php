@@ -229,7 +229,13 @@ if ($action == 'save_author')  {
        if ($save) {
     	  echo $save;
        }
-   }
+   } else {
+   	foreach ($errors as $error) {
+   	   header("Content-Type: application/json");
+	   echo json_encode(array('status'=>0, 'message'=>$error));
+	   exit();
+	}	
+	}
  
 }
 
@@ -240,13 +246,37 @@ if ($action == 'remove_author') {
 	}
 }
 
-if ($action == 'save_post') {
-	$save = $crud->save_post();
-	if ($save) {
-	   echo $save;
+if ($action == 'save_post') {	
+	if (isset($_POST["post"]) && empty($_POST["post"])) {
+		header("Content-Type: application/json");
+		echo json_encode(array('status'=>0, 'message'=>'post field missing.'));
+		exit();		
+	}
+	if (isset($_POST["authors"])) {
+		if (empty($_POST["author_id"])) {
+	 	   header("Content-Type: application/json");
+		   echo json_encode(array('status'=>0, 'message'=>'author field missing.'));
+		   exit();		
+	   }
+	} 
+	if (!isset($_POST["authors"])) {
+		if (empty($_POST['first_name']) || empty($_POST['last_name'])) {
+            header("Content-Type: application/json");
+		    echo json_encode(array('status'=>0, 'message'=>'author field missing.'));
+		    exit();	
+		}
+	}
+	if (empty($_POST['name']) || empty($_POST['category_id'])) {
+		header("Content-Type: application/json");
+		echo json_encode(array('status'=>0, 'message'=>'missing field(s).'));
+		exit();		
+	} else { 
+	    $save = $crud->save_post();
+	    if ($save) {
+	       echo $save;
+        }
     }	
 }
-
 
 if ($action == 'settings') { 
     $save = false; 

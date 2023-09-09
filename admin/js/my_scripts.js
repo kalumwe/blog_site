@@ -140,12 +140,14 @@ window.uni_modal = function($title = '' , $url=''){
       
       if (isChecked) {
         $("#hiddenInput").show();  // Display hidden input
-        $("#first_name").prop("disabled", true);  // Disable text input
-        $("#last_name").prop("disabled", true);  // Disable text input
+        $("#first_name").prop("disabled", true);  // Disable text input        
+        $("#last_name").prop("disabled", true);          
+        $("#author_id").prop("disabled", false);  // Disable text input
       } else {
-        $("#hiddenInput").hide();  // Hide hidden input
-         $("#first_name").prop("disabled", false);  // Disable text input
-        $("#last_name").prop("disabled", false);  // Disable text input
+        $("#hiddenInput").hide(); 
+        $("#first_name").prop("disabled", false);  
+        $("#last_name").prop("disabled", false);  
+        $("#author_id").prop("disabled", true);  
       }
     });
   });
@@ -177,14 +179,16 @@ window.uni_modal = function($title = '' , $url=''){
                             window.location.href = data.url; // Reload the page after a delay
                         }, 2000);
                         // alert_toast("Data successfully updated.",'success');
-                      } else {
-                         $("#message").text(data.message);
-                         $("#message").attr("class", "alert alert-danger");
-                         $("#message").fadeIn();
+                      } 
+                      if (data.status == 0) {
+                         $("#error-message").text(data.message);
+                         $("#error-message").attr("class", "alert alert-danger");
+                         $("#error-message").fadeIn();
                          setTimeout(function() {
-                            $("#message").fadeOut();
-                         }, 3000); 
-                      }
+                            $("#error-message").fadeOut();
+                         }, 7044); 
+                      } 
+
                     },
                     error: function() {
                         console.log("Error fetching data.");
@@ -265,14 +269,15 @@ window.uni_modal = function($title = '' , $url=''){
                             window.location.href = data.url; 
                         }, 2000);
                         // alert_toast("Data successfully updated.",'success');
-                      } else {
-                         $("#message").text(data.message);
-                         $("#message").attr("class", "alert alert-danger");
-                         $("#message").fadeIn();
+                      } 
+                       if (data.status == 0) {
+                         $("#error-message").text(data.message);
+                         $("#error-message").attr("class", "alert alert-danger");
+                         $("#error-message").fadeIn();
                          setTimeout(function() {
-                            $("#message").fadeOut();
+                            $("#error-message").fadeOut();
                          }, 3000); 
-                      }
+                      } 
                     },
                     error: function() {
                         console.log("Error fetching data.");
@@ -361,14 +366,7 @@ window.uni_modal = function($title = '' , $url=''){
                             location.reload(); // Reload the page after a delay
                            }, 2000);
                         // alert_toast("Data successfully updated.",'success');
-                      } else {
-                         $("#message").text(data.message);
-                         $("#message").attr("class", "alert alert-danger");
-                         $("#message").fadeIn();
-                         setTimeout(function() {
-                            $("#message").fadeOut();
-                         }, 3000); 
-                      }
+                      } 
                     },
                     error: function() {
                         console.log("Error fetching data.");
