@@ -62,8 +62,8 @@ if ($query->rowCount() == 0) {
             $total = $conn->query($sql);
             $totalComments = $total->fetch()[0];
 
-            // Query to get top-level comments and their replies
-            $sql = "SELECT c.*, CONCAT(u.first_name, ' ', u.last_name) AS uname, u.profile_picture FROM comments c INNER JOIN users u ON u.id=c.user_id WHERE c.parent_id IS NULL AND c.post_id=$postId ORDER BY created_at DESC";
+            // Query to get top-level comments and their replies 
+            $sql = "SELECT c.*, CONCAT(u.first_name, ' ', u.last_name) AS uname, c.name, u.profile_picture FROM comments c LEFT JOIN users u ON u.id=c.user_id WHERE c.parent_id IS NULL AND c.post_id=$postId ORDER BY created_at DESC";
             $result = $conn->query($sql);
 
         ?>
@@ -80,15 +80,14 @@ if ($query->rowCount() == 0) {
                 ?> 
                 <div class="flex-shrink-0">
                   <div class="avatar avatar-sm rounded-circle">
-                    <img class="avatar-img" src="./admin/assets/img/<?php echo isset($_SESSION['userId']) ? safe($rowComment['profile_picture']) : 
-                         safe($rowComment['image_path']); ?>" alt="" class="img-fluid">
+                    <img class="avatar-img" src="./admin/assets/img/undraw_profile.svg" alt="" class="img-fluid">
                   </div>
                 </div>
 
                 <div class="flex-grow-1 ms-2 ms-sm-3">
                   <div class="comment-meta d-flex align-items-baseline">
-                    <h6 class="me-2"><?php echo isset($_SESSION['userId']) ? safe($rowComment['uname']) : 
-                         safe($rowComment['name']); ?>. </h6>
+                    <h6 class="me-2"><?php if (isset($_SESSION['userId'])) echo safe($rowComment['uname']) ; 
+                        if (!is_null($rowComment['name'])) echo safe($rowComment['name']); ?>. </h6>
                     <span class="text-muted"><?= $timeElapsed ?></span>
                   </div>
                   <div class="comment-body"><?= safe($rowComment['content']) ?></div>
@@ -116,7 +115,7 @@ if ($query->rowCount() == 0) {
                $totalReply = $totalRpl->fetch()[0];
 
                // Fetch the replies for this comment
-               $sql = "SELECT c.*, CONCAT(u.first_name, ' ', u.last_name) AS uname, u.profile_picture FROM comments c INNER JOIN users u ON u.id=c.user_id WHERE c.parent_id = $parentCommentId  AND c.post_id=$postId ORDER BY created_at DESC";
+               $sql = "SELECT c.*, CONCAT(u.first_name, ' ', u.last_name) AS uname, c.name, u.profile_picture FROM comments c LEFT JOIN users u ON u.id=c.user_id WHERE c.parent_id = $parentCommentId  AND c.post_id=$postId ORDER BY created_at DESC";
                $replyResult = $conn->query($sql);
 
               ?>
@@ -181,9 +180,9 @@ if ($query->rowCount() == 0) {
                 }
               ?>
                 <h5 class="comment-title">Leave a Comment</h5>
-                <form action="forms/insert_comment.php" method="post" role="form" class="commentFor" id="commentFor" onsubmit="">
-
+                <form action="forms/insert_comment.php" method="post" role="form" class="commentForm" id="commentForm" onsubmit="">
                 <div class="row">
+                  <div id="sendmessage">Your message has been sent. Thank you!</div>
                   <?php 
                      if (!isset($_SESSION['userId'])) { ?>
                   <div class="col-lg-6 mb-3">
@@ -218,7 +217,7 @@ if ($query->rowCount() == 0) {
                 <input type="hidden" name="user-id" value="<?php echo (int) $user_id ?>" />
               <?php } ?>
                 <input type="hidden" name="post-id" value="<?php echo (int) $meta['id'] ?>" />
-
+             
                   <div class="col-12">
                     <input type="submit" class="btn btn-primary" name="send-comment" value="Post comment">
                   </div>

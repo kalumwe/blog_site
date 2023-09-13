@@ -122,10 +122,7 @@ $currentURL = 'category.php';
                 <?php
                       //first two sentences of article in $extract[0] are immediately displayed.
                        $extract = getFirst(html_entity_decode($meta['post']), 3);  ?>
-                      <p><span class="firstcharacter">
-                        <?php echo isset($meta['post']) ? getFirstLetter($extract[0]) : ''; ?></span>
-                        <?php echo isset($meta['post']) ? removeFirstLetter($extract[0]) : ''; ?></p>
-
+                      <p><?php echo isset($meta['post']) ? html_entity_decode($extract[0]) : ''; ?></p> 
                 <div class="d-flex align-items-center author">
                   <div class="photo">
                     <img src="assets/img/<?php echo isset($meta['profile_picture']) ? safe($meta['profile_picture']) : ''; ?>" 

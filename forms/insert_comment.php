@@ -40,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     
-   
     // Check if the content is not empty after trimming and sanitizing
     if (!empty($content) && empty($errors)) {
 
@@ -76,8 +75,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindParam(':created', $created_at, PDO::PARAM_STR);
         $result = $stmt->execute();
              
-        $success = "sent";
-        echo $success;
+        $msg = "OK";
+        //header("Content-Type: application/json");
+			  //echo json_encode(array('status'=>1));
+        echo $msg;
         //return to prev page
         //$url = $_SERVER['HTTP_REFERER'];
         // header("Location: $url");

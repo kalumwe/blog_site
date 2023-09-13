@@ -17,7 +17,7 @@ try {
 $conn = dbConnect('read', 'pdo');
 
 //retrieve contact details
-$sql = "SELECT * from site_settings limit 1, 1";
+$sql = "SELECT * from site_settings limit 1";
 $result = $conn->query($sql);
 $error = $conn->errorInfo()[2];
 
@@ -89,20 +89,14 @@ $currentURL = 'search-result.php?search_post';
 <head>
   <row charset="utf-8">
   <row content="width=device-width, initial-scale=1.0" name="viewport">
-
   <title>Index</title>
-
-  <?php include_once('./includes/external-links.php'); ?>
-  
+  <?php include_once('./includes/external-links.php'); ?> 
 </head>
-
 <body>
 
   <!-- ======= Header ======= -->
    <?php include'./includes/header.php'; ?>
-
   <!-- End Header -->
-
   <main id="main">
     <!-- ======= Search Results ======= -->
     <section id="search-result" class="search-result">
@@ -140,11 +134,8 @@ $currentURL = 'search-result.php?search_post';
                 <h3><a href="index.php?page=single-post&id=<?php echo isset($row['id']) ? safe($row['id']) : ''; ?>">
                 <?php echo isset($row['title']) ? safe($row['title']) : ''; ?></a></h3>
                  <?php
-                      //first two sentences of article in $extract[0] are immediately displayed.
-                      isset($row['post']) ? safe($row['post']) : '';
-                       $extract = getFirst($row['post'], 2);    ?>
-                      <p><span class="firstcharacter"><?php echo getFirstLetter($extract[0]); ?></span>
-                      <?php echo safe(removeFirstLetter($extract[0])); ?></p>
+                       $extract = getFirst($row['post'], 2);  ?>
+                      <p><?php echo isset($row['post']) ? html_entity_decode($extract[0]) : ''; ?></p>
 
                 <div class="d-flex align-items-center author">
                   <div class="photo">
@@ -174,7 +165,6 @@ $currentURL = 'search-result.php?search_post';
                           // otherwise leave the cell empty
                           echo '&nbsp;';
                         } 
-
                   //display page number links
                       for ($i = 1; $i <= $pages; $i++) {
                          if ($i == $curPage) { ?>
@@ -193,16 +183,13 @@ $currentURL = 'search-result.php?search_post';
                         } ?>
               </div>
             </div><!-- End Paging -->
-
           </div>
-
           <div class="col-md-3">           
             <!-- ======= Sidebar ======= -->
              <?php include'side_bar.php'; ?>
 
         </div>
-      </div>
-      
+      </div>     
     </div>
     </section> <!-- End Search Result -->
 

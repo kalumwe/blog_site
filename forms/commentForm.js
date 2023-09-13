@@ -92,7 +92,7 @@ jQuery(document).ready(function($) {
     else var str = $(this).serialize();
     var action = $(this).attr('action');
     if( ! action ) {
-      action = 'forms/.php';
+      action = 'forms/insert_comment.php';
     }
     $.ajax({
       type: "POST",
@@ -102,13 +102,22 @@ jQuery(document).ready(function($) {
         // alert(msg);
         if (msg == 'OK') {
           $("#sendmessage").addClass("show");
-          $("#errormessage").removeClass("show");
+          $("#errormessage").removeClass("show");         
+          $("#sendmessage").fadeIn();
+          setTimeout(function() {
+             $("#sendmessage").fadeOut();
+          }, 3044); 
           $('.commentForm').find("input, textarea").val("");
-        } else {
-          $("#sendmessage").removeClass("show");
-          $("#errormessage").addClass("show");
-          $('#errormessage').html(msg);
-        }
+          setTimeout(function() {
+               location.reload(); // Reload the page after a delay
+          }, 2000);
+          
+        } 
+        //else {
+          //$("#sendmessage").removeClass("show");
+         // $("#errormessage").addClass("show");
+         // $('#errormessage').html(msg);
+        //}
 
       }
     });

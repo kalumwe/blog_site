@@ -58,23 +58,5 @@
   }
 
 
-// JavaScript to handle form submission and display the new comment after success
-document.getElementById('commentForm').addEventListener('submit', function (event) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
 
-    fetch('./forms/', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Handle success response, e.g., display the new comment in the UI
-        console.log(data);
-    })
-    .catch(error => {
-        // Handle error
-        //console.error(error);
-    });
-});
     
