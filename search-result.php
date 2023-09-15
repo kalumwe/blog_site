@@ -140,7 +140,7 @@ $currentURL = 'search-result.php?search_post';
                 <div class="d-flex align-items-center author">
                   <div class="photo">
                     <img src="assets/img/<?php echo isset($row['profile_picture']) ? safe($row['profile_picture']) : ''; ?>" 
-                    alt=""  width='60' height='42'></div>
+                    alt=""  width='60' height='42' class="profile_img"></div>
                   <div class="name">
                     <h3 class="m-0 p-0"><?php echo isset($row['author_name']) ? safe($row['author_name']) : ''; ?></h3>
                   </div>

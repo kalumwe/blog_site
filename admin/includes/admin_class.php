@@ -868,13 +868,13 @@ Class Action {
 	$Errors = "Data can't be retrieved";
 	// print "An Exception occurred. Message: " . $e->getMessage();
 	//print "The system is busy please again try later";
-	// $date = date('m.d.y h:i:s');                
-	// $eMessage = $date . " | Exception Error | " , $errormessage . |\n";
+	//$date = date('m.d.y h:i:s');                
+	//$eMessage = $date . " | Exception Error | ,"  . $errormessage . ". |\n";
 	// error_log($eMessage,3,ERROR_LOG);
 	// e-mail support person to alert there is a problem
-	// error_log("Date/Time: $date - Exception Error, Check error log for
-	//details", 1, noone@helpme.com, "Subject: Exception Error \nFrom:
-	// Error Log <errorlog@helpme.com>" . "\r\n");
+	//error_log("Date/Time: $date - Exception Error, Check error log for
+	//details", 1, kalukav55@gmail.com.com, "Subject: Exception Error \nFrom:
+	//Error Log <kalukav55@gmail.com>" . "\r\n");
 
 } catch (PDOError $e) {
 	$Errors = $e->getMessage();
@@ -882,11 +882,12 @@ Class Action {
 	// print "An Error occurred. Message: " . $e->getMessage();
 	// print "The system is busy please try later";
 	// $date = date('m.d.y h:i:s');        
-	// $eMessage = $date . " | Error | " , $errormessage . |\n";
+	 //$eMessage = $date . " | Error |  , " . $errormessage . ". |\n";
 	// error_log($eMessage,3,ERROR_LOG);
 	// e-mail support person to alert there is a problem
 	// error_log("Date/Time: $date - Error, Check error log for
-	//details", 1, noone@helpme.com, "Subject: Error \nFrom: Error Log
-	// <errorlog@helpme.com>" . "\r\n");
+	//", 1, kalukav55@gmail.com, "Subject: Error \nFrom: Error Log
+	// <kalukav55@gmail.com>" . "\r\n");
+	//mail($to, $subject, $message);
 
 }

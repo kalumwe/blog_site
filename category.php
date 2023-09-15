@@ -126,7 +126,7 @@ $currentURL = 'category.php';
                 <div class="d-flex align-items-center author">
                   <div class="photo">
                     <img src="assets/img/<?php echo isset($meta['profile_picture']) ? safe($meta['profile_picture']) : ''; ?>" 
-                    alt="" class="" width='60' height='42'></div>
+                    alt="" class="profile_img" width='60' height='42'></div>
                   <div class="name">
                     <h3 class="m-0 p-0"><?php echo isset($meta['author_name']) ? safe($meta['author_name']) : ''; ?></h3>
                   </div>

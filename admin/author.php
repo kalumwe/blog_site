@@ -31,7 +31,7 @@
         </div>
 
         <div class=" mb-4">
-            <a href="index.php?page=manage-author" type="button" class="btn btn-primary btn-sm btn-block ml-auto mr-auto py-2 btn-round" 
+            <a href="index.php?page=manage-author" class="btn btn-primary btn-sm  ml-auto mr-auto py-2 btn-round" 
                 id="new_author">
                 <i class="fa fa-plus"></i> New Author</a>
         </div>
@@ -85,7 +85,7 @@
                                         echo "
                                             <td>
                                              <div class='d-flex justify-content-center mx-auto my-auto'>"; 
-                                        echo " <img class='img  my-auto rounded-circle border-gray' src= '" .$dp . "' width='70' height='70' alt='' " .$imageSize . " '></div></td>";
+                                        echo " <img class='img profile_img my-auto rounded-circle border-gray' src= '" .$dp . "' width='70' height='70' alt='' " .$imageSize . " '></div></td>";
                                                 } 
                                             } else {
                                         echo "<td> 

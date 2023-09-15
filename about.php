@@ -50,7 +50,7 @@
             </div>
           </div>
           <div class="col-lg-7 text-center mb-5 mx-auto">
-            <img src="assets/img/me.jpg" alt="" class=" rounded-circle  mb-4" width="244" height="244">
+            <img src="assets/img/me.jpg" alt="" class="profile_img rounded-circle mb-4" width="244" height="244">
             <h4>Kalumba Mweshi</h4>
             <span class="d-block mb-3 text-uppercase">Full-stack Developer</span>
             <p>Passionate and skilled web designer and developer and blogger with a superb work ethic and 2 years of experience.</p>

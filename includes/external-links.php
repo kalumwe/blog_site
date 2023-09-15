@@ -30,7 +30,10 @@
   <link href="assets/css/styles.css" rel="stylesheet">
 
   <style type="text/css">
-  	
+  	.profile_img {
+      overflow: hidden;
+      object-fit: cover;
+    }
   </style>
 
 

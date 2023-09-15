@@ -33,8 +33,8 @@
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <i class="fa fa-refresh"></i>
-                  Update Now
+                  <i class="fa fa-eye"></i>
+                  <a href="index.php?page=posts" class="text-muted text-decoration-none"> View all</a>
                 </div>
               </div>
             </div>
@@ -62,8 +62,8 @@
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <i class="fa fa-calendar-o"></i>
-                  Last day
+                  <i class="fa fa-eye"></i>
+                  <a href="index.php?page=category" class="text-muted text-decoration-none"> View all</a>
                 </div>
               </div>
             </div>
@@ -91,8 +91,8 @@
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <i class="fa fa-clock-o"></i>
-                  In the last hour
+                  <i class="fa fa-eye"></i>
+                  <a href="index.php?page=Comments" class="text-muted text-decoration-none"> View all</a>
                 </div>
               </div>
             </div>
@@ -120,7 +120,7 @@
                 <hr>
                 <div class="stats">
                   <i class="fa fa-refresh"></i>
-                  Update now
+                  <a href="index.php?page=dashboard" class="text-muted text-decoration-none"> Update Now</a>
                 </div>
               </div>
             </div>

@@ -45,7 +45,10 @@
             padding-left: 11px;
             padding-right: 11px;
         }
-
+       .profile_img {
+         overflow: hidden;
+         object-fit: cover;
+    }
         </style>
 
 <!-- js -->

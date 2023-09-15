@@ -44,7 +44,7 @@ if (!is_null($row["author_id"])) {
                    <span class="mx-1">&bullet;</span> <span><?php echo isset($meta['published']) ? $user->safe($meta['published']) : ''; ?></span></div>
 
               <div class="d-flex align-items-center avator">
-                <div class="photo me-2"><img src="assets/img/<?php echo isset($meta['profile_picture']) ? $user->safe($meta['profile_picture']) : ''; ?>" alt="" class="rounded-circle"  width='40' height='40' class=""></div>
+                <div class="photo me-2"><img src="assets/img/<?php echo isset($meta['profile_picture']) ? $user->safe($meta['profile_picture']) : ''; ?>" alt="" class="profile_img rounded-circle"  width='40' height='40'></div>
                 <div class="name">
                   <h6 class="m-0 p-0 mb-2"><?php echo isset($meta['author_name']) ? $user->safe($meta['author_name']) : ''; ?></h6>
                 </div>

@@ -26,7 +26,7 @@ $qry = $conn->query("SELECT * FROM users  WHERE id=".(int) $user_id);
                   <?php
                    if (!empty($imageSize)) { ?>
                   <a href="#">
-                    <img class="avatar border-gray" src="<?= $image ?>" alt="..." >
+                    <img class="avatar border-gray profile_img" src="<?= $image ?>" alt="..." >
                   <?php } else { ?>
                     <img class="avatar border-gray" src="<?= $imageDir."undraw_profile.svg" ?>" alt="...">
                   <?php } ?> 
