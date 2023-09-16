@@ -25,8 +25,8 @@
   //validate and sanitize 'email' value
          function validateEmail($email) {
             $email = trim($email);
-           
-               $email = filter_var( $email, FILTER_SANITIZE_EMAIL);
+            $email = safe($email)        
+            $email = filter_var( $email, FILTER_SANITIZE_EMAIL);
             //}
             return $email;
         }

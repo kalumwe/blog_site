@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
        $name = $_POST['comment-name'];
        $email = $_POST['comment-email'];
 
-       if (isset($name)) {
+       if (isset($name) && (strlen($name) < 75)) {
           $validName = safe($name);
        } else {
          $errors = 'field empty or invalid input.';
@@ -38,7 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      } else {    
         $errors = 'field empty or invalid input.';
     }
-
     
     // Check if the content is not empty after trimming and sanitizing
     if (!empty($content) && empty($errors)) {
@@ -104,6 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         // Handle the error when the content is empty
         $errors = "Comment content cannot be empty.";
+
         //exit();
 
         /*

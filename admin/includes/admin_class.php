@@ -31,16 +31,18 @@ Class Action {
 	function __destruct() {
 	    $this->db = null;
 	}
+     
+   private function date() {
+	return date('M-D-Y h:i:s');
+   }
 
 	private function handleException($e) {
 		$errormessage = $e->getMessage();
 		$file = $e->getFile();
         $line = $e->getLine();
 		//$Errors = "Data can't be retrieved";
-		// print "An Exception occurred. Message: " . $e->getMessage();
-		//print "The system is busy please again try later";
-		$date = date('m-d-y h:i:s');                
-		$eMessage = $date . " | Exception Error | , "  . $errormessage . " in \" " . $file . " \" on line " . $line .". |\n";
+		// print "An Exception occurred. Message: " . $e->getMessage();           
+		$eMessage = "| Error |  , " . $this->date() . " | " . $errormessage . " in \" " . $file . " \"  on line " . $line .". |\n";
 		error_log($eMessage,3, ERROR_LOG);
 		// e-mail support person to alert there is a problem
 		//error_log("Date/Time: $date - Exception Error, Check error log for
@@ -56,15 +58,19 @@ Class Action {
 		$file = $e->getFile();
         $line = $e->getLine();
 		// print "An Error occurred. Message: " . $e->getMessage();
-		// print "The system is busy please try later";
-		$date = date('m-d-y h:i:s');        
-		$eMessage = $date . " | Error |  , " . $errormessage . " in \" " . $file . " \"  on line " . $line .". |\n";
+		// print "The system is busy please try later";       
+		$eMessage = "| Error |  , " . $this->date() . " | " . $errormessage . " in \" " . $file . " \"  on line " . $line .". |\n";
 		error_log($eMessage,3, ERROR_LOG);
 		// e-mail support person to alert there is a problem
 		//", 1, kalukav55@gmail.com, "Subject: Error \nFrom: Error Log
 		// <kalukav55@gmail.com>" . "\r\n");
 		//mail($to, $subject, $message);
 		//header("Location: ../500.php");
+	}
+
+	private function internalErrorMsg() {
+		header("Content-Type: application/json");
+		echo json_encode(array('status'=>5, 'url'=>'./500.php'));
 	}
 
     //get errors function
@@ -597,6 +603,7 @@ Class Action {
 
 	//function to add new author and update
 	public function save_author() {
+		try {
 		extract($_POST);
 		$data = " first_name = :fname ";
 		$data .= ", last_name = :lname ";
@@ -651,6 +658,8 @@ Class Action {
 			}
 
 			if ($insert) {
+				$status_string = $this->date() . " | Author added | " . $authorId . ". \n";
+                error_log($status_string,3, LOGS);
 				header("Content-Type: application/json");
 				return json_encode(array('status'=>1, 'id'=>$authorId, 'message'=>'Author added succesfully', 
 				                'url'=>"//localhost:8080/blog_site/admin/index.php?page=author"));
@@ -670,7 +679,7 @@ Class Action {
 			$oldFilename = $row['profile_picture'];
 			
 			//$update  = $this->db->query("UPDATE author set".$data." , date_published='".date('Y-m-d H:i')."' WHERE id=".$id);
-			$sql = "UPDATE author SET first_name=:fname, last_name=:lname, profile_picture=:pic, updated_at=:pdate WHERE  id=:id";
+			$sql = "UPDATE authors SET first_name=:fname, last_name=:lname, profile_picture=:pic, updated_at=:pdate WHERE  id=:id";
 			$stmt = $this->db->prepare($sql);
 			if (isset($_FILES['img']['tmp_name']) && $_FILES['img']['tmp_name'] != '') {
 				$stmt->bindParam(':pic', $fname, PDO::PARAM_STR);
@@ -713,8 +722,9 @@ Class Action {
 				$sql_add = "INSERT INTO post_author (author_id, post_id)VALUES ($id, $post_id)";
 				$this->db->query($sql_add);
 			}
-
 			if ($update) {
+				$status_string = $this->date() . " | Author updated | " . $id . ". \n";
+                error_log($status_string,3, LOGS);
 				header("Content-Type: application/json");
 				return json_encode(array('status'=>1, 'id'=>$id, 'message'=>"Author updated succesfully",
 				                       'url'=>"//localhost:8080/blog_site/admin/index.php?page=author"));
@@ -722,7 +732,21 @@ Class Action {
 				header("Content-Type: application/json");
 				return json_encode(array('status'=>0, 'message'=>'Can\'t update author. Please try again.'));
 			}
-		}		
+		}	
+		if ($stmt === null) { 
+			throw new Exception("Internal error can't insert/update. ");
+			return $this->internalErrorMsg();
+			//header("Location: ../500.php");
+		}
+		//handle errors and exceptions
+	    } catch (Exception $e) {
+		    $this->handleException($e);
+			return $this->internalErrorMsg();
+	
+	    } catch (Error $e) {
+		    $this->handleError($e);	
+			return $this->internalErrorMsg();
+	    }	
 		$this->db = null;		
 		
 	}
@@ -809,7 +833,8 @@ Class Action {
             $id = $this->db->lastInsertId();
 
 			if ($insert) {
-				$status_string = date('mdYhis') . " | Post added | " . $name . ". \n";
+				//add to logs
+				$status_string = $this->date() . " | Post added | " . $name . ". \n";
                 error_log($status_string,3, LOGS);
 				header("Content-Type: application/json");
 				return json_encode(array('status'=>1, 'id'=>$id, 'message'=>"Post added succesfully",
@@ -850,7 +875,7 @@ Class Action {
 				$query = $this->db->query($sql);
 
 			}									
-			$sql  = "UPDATE post SET title=:ttle, post=:pst, category_id = :cat_id, img_path = :imgpath WHERE id=:id";			
+			$sql  = "UPDATE posts SET title=:ttle, post=:pst, category_id = :cat_id, img_path = :imgpath WHERE id=:id";			
 			$stmt = $this->db->prepare($sql);
 			if (isset($_FILES['img']['tmp_name']) && $_FILES['img']['tmp_name'] != '') {
 				$stmt->bindParam(':imgpath', $fname, PDO::PARAM_STR);
@@ -874,7 +899,7 @@ Class Action {
 			if ($update) {
 				//"C:/Temp/logs/errors.log"				
 				header("Content-Type: application/json");
-				$status_string = date('m-d-Y h:i:s') . " | Post updated | " . $name . ". \n";
+				$status_string = $this->date() . " | Post updated | " . $name . ". \n";
 				error_log($status_string, 3, LOGS);
 				return json_encode(array('status'=>1, 'id'=>$id, 'message'=>"Post updated succesfully",
 				                         'url'=>"//localhost:8080/blog_site/admin/index.php?page=preview_post&id=".$id.""));
@@ -886,20 +911,17 @@ Class Action {
 		}		
 		if ($stmt === null) { 
 			throw new Exception("Internal error can't insert/update. ");
-			header("Content-Type: application/json");
-			return json_encode(array('status'=>5, 'url'=>'./500.php'));
+			return $this->internalErrorMsg();
 			//header("Location: ../500.php");
 		}
 		//handle errors and exceptions
 	    } catch (Exception $e) {
 		    $this->handleException($e);
-			header("Content-Type: application/json");
-			return json_encode(array('status'=>5, 'url'=>'./500.php'));
+			return $this->internalErrorMsg();
 	
 	    } catch (Error $e) {
 		    $this->handleError($e);	
-			header("Content-Type: application/json");
-			return json_encode(array('status'=>5, 'url'=>'./500.php'));
+			return $this->internalErrorMsg();
 	    }
 		$this->db = null;
 	}

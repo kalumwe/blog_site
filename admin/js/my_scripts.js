@@ -191,7 +191,6 @@ window.uni_modal = function($title = '' , $url=''){
                       if (data.status == 5) {
                          window.location.href = data.url; 
                       } 
-
                     },
                     error: function() {
                         console.log("Error fetching data.");
@@ -280,6 +279,9 @@ window.uni_modal = function($title = '' , $url=''){
                          setTimeout(function() {
                             $("#error-message").fadeOut();
                          }, 3000); 
+                      } 
+                       if (data.status == 5) {
+                         window.location.href = data.url; 
                       } 
                     },
                     error: function() {
