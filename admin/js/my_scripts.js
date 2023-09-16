@@ -188,6 +188,9 @@ window.uni_modal = function($title = '' , $url=''){
                             $("#error-message").fadeOut();
                          }, 7044); 
                       } 
+                      if (data.status == 5) {
+                         window.location.href = data.url; 
+                      } 
 
                     },
                     error: function() {

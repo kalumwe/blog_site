@@ -1,12 +1,14 @@
 <?php
 /** admin class **/
 
-define('ERROR_LOG','C:/Temp/logs/errors.log');
-try { 
+//$user_log_file = "C:/Temp/logs/errors.log";
+define('ERROR_LOG', 'C:/Temp/logs/errors.log');
+define('LOGS', 'C:/Temp/logs/actions.log');
 
 $Errors = [];
 
 Class Action {
+	
 	private $db;
 	protected $img_max_size = 700500;
 	protected array $errors = [];
@@ -28,6 +30,41 @@ Class Action {
 	//destructor
 	function __destruct() {
 	    $this->db = null;
+	}
+
+	private function handleException($e) {
+		$errormessage = $e->getMessage();
+		$file = $e->getFile();
+        $line = $e->getLine();
+		//$Errors = "Data can't be retrieved";
+		// print "An Exception occurred. Message: " . $e->getMessage();
+		//print "The system is busy please again try later";
+		$date = date('m-d-y h:i:s');                
+		$eMessage = $date . " | Exception Error | , "  . $errormessage . " in \" " . $file . " \" on line " . $line .". |\n";
+		error_log($eMessage,3, ERROR_LOG);
+		// e-mail support person to alert there is a problem
+		//error_log("Date/Time: $date - Exception Error, Check error log for
+		//details", 1, kalukav55@gmail.com, "Subject: Exception Error \nFrom:
+		//Error Log <kalukav55@gmail.com>" . "\r\n");
+		//header("Location: ../500.php");
+
+	}
+
+	private function handleError($e) {
+		$errormessage = $e->getMessage();
+		$Errors = "Data cannot be retrieved";
+		$file = $e->getFile();
+        $line = $e->getLine();
+		// print "An Error occurred. Message: " . $e->getMessage();
+		// print "The system is busy please try later";
+		$date = date('m-d-y h:i:s');        
+		$eMessage = $date . " | Error |  , " . $errormessage . " in \" " . $file . " \"  on line " . $line .". |\n";
+		error_log($eMessage,3, ERROR_LOG);
+		// e-mail support person to alert there is a problem
+		//", 1, kalukav55@gmail.com, "Subject: Error \nFrom: Error Log
+		// <kalukav55@gmail.com>" . "\r\n");
+		//mail($to, $subject, $message);
+		//header("Location: ../500.php");
 	}
 
     //get errors function
@@ -193,9 +230,10 @@ Class Action {
 
 		}
 
+		//function to update users
 		public function updateUser($firstname, $lastname, $username, $uemail) {
 			extract($_POST);
-			if ($_FILES['img']['tmp_name'] != '') {
+			if (isset($_FILES['img']['tmp_name']) && $_FILES['img']['tmp_name'] != '') {
 				$fname = strtotime(date('y-m-d H:i')).'_'.$_FILES['img']['name'];
 				//check image size and file name length
 				if (($_FILES['img']['size'] > $this->img_max_size) || (strlen($fname) > 100)) {
@@ -249,6 +287,7 @@ Class Action {
 	        
 	  }
 	
+	//function to change password
 	public function change_password($oldpassword, $newpassword) {
 		extract($_POST);
 		$result = false;
@@ -287,6 +326,7 @@ Class Action {
 
 	}
 
+	//function to login users
 	public function login($emailusername, $password) {		
 		//$KEY = 'Trav3lw@rldwitTh@nd33';
 		//$sql = "SELECT user_id, u_name, email, user_level, AES_ENCRYPT(pass, :ky) AS pwd from users
@@ -365,6 +405,7 @@ Class Action {
 		header("location://localhost:8080/blog_site/login.php");
 	}
 	
+	//function to save user settings
 	function save_settings(){
 		extract($_POST);
 		$email = filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -416,14 +457,12 @@ Class Action {
 		$this->db = null;
 	}
 
+
 	public function load_postCategory() {
 		$qry = $this->db->query("SELECT p.*, a.profile_picture, c.name AS category, DATE_FORMAT(p.date_published, '%b %D \'%y') AS published, 
 		 CONCAT(a.first_name, ' ', a.last_name) AS author_name FROM posts p INNER JOIN category c ON c.id = p.category_id 
 		 INNER JOIN author a ON a.id = p.author_id "); 
 		$data = array();
-		//while ($row=$qry->fetch()) {
-		//	$data[] = $row;
-		//}
 		$row=$qry->fetch();		
 		return $row;
    }
@@ -481,24 +520,6 @@ Class Action {
        return $total->fetch()[0];
 	   $this->db = null;
    }
-
-	function load_category(){
-		$qry = $this->db->query("SELECT * from category WHERE status = 1");
-		$data = array();
-		while($row=$qry->fetch_assoc()){
-			$data[] = $row;
-		}
-		echo json_encode($data);
-	}
-
-	function load_post(){
-		$qry = $this->db->query("SELECT p.*,c.name as category from posts p inner join category c on c.id = p.category_id ");
-		$data = array();
-		while($row=$qry->fetch_assoc()){
-			$data[] = $row;
-		}
-		echo json_encode($data);
-	}
 
 	function remove_category($item_id){
 		extract($_POST);
@@ -574,13 +595,13 @@ Class Action {
 		$this->db = null;
 	}
 
-	//function to save new author and update
+	//function to add new author and update
 	public function save_author() {
 		extract($_POST);
 		$data = " first_name = :fname ";
 		$data .= ", last_name = :lname ";
 		
-		if ($_FILES['img']['tmp_name'] != '') {
+		if (isset($_FILES['img']['tmp_name']) && $_FILES['img']['tmp_name'] != '') {
 			$fname = strtotime(date('y-m-d H:i')).'_'.$_FILES['img']['name'];
 		    if(isset($fname)) {
 			   $fname = $this->safe($fname);
@@ -651,7 +672,7 @@ Class Action {
 			//$update  = $this->db->query("UPDATE author set".$data." , date_published='".date('Y-m-d H:i')."' WHERE id=".$id);
 			$sql = "UPDATE author SET first_name=:fname, last_name=:lname, profile_picture=:pic, updated_at=:pdate WHERE  id=:id";
 			$stmt = $this->db->prepare($sql);
-			if ($_FILES['img']['tmp_name'] != '') {
+			if (isset($_FILES['img']['tmp_name']) && $_FILES['img']['tmp_name'] != '') {
 				$stmt->bindParam(':pic', $fname, PDO::PARAM_STR);
 				//delete old image 
 			    $imagePath = "C:/xampp/htdocs/blog_site/admin/assets/img/".$oldFilename;
@@ -708,6 +729,7 @@ Class Action {
 
 	//function to save new post creation and update
 	public function save_post() {
+		try {
 		extract($_POST);
 		$date = date('Y-m-d H:i');		
 		$data = " title = :ttle ";
@@ -727,7 +749,7 @@ Class Action {
 		$category_id = (int) $category_id;
 		$date = $this->safe($date);
 		
-		if ($_FILES['img']['tmp_name'] != '') {
+		if (isset($_FILES['img']['tmp_name']) && $_FILES['img']['tmp_name'] != '') {
 			$fname = strtotime(date('y-m-d H:i')).'_'.$_FILES['img']['name'];
 		    if(isset($fname)) {
 			   $fname = $this->safe($fname);
@@ -787,6 +809,8 @@ Class Action {
             $id = $this->db->lastInsertId();
 
 			if ($insert) {
+				$status_string = date('mdYhis') . " | Post added | " . $name . ". \n";
+                error_log($status_string,3, LOGS);
 				header("Content-Type: application/json");
 				return json_encode(array('status'=>1, 'id'=>$id, 'message'=>"Post added succesfully",
 				                         'url'=>"//localhost:8080/blog_site/admin/index.php?page=preview_post&id=".$id.""));
@@ -826,9 +850,9 @@ Class Action {
 				$query = $this->db->query($sql);
 
 			}									
-			$sql  = "UPDATE posts SET title=:ttle, post=:pst, category_id = :cat_id, img_path = :imgpath WHERE id=:id";			
+			$sql  = "UPDATE post SET title=:ttle, post=:pst, category_id = :cat_id, img_path = :imgpath WHERE id=:id";			
 			$stmt = $this->db->prepare($sql);
-			if ($_FILES['img']['tmp_name'] != '') {
+			if (isset($_FILES['img']['tmp_name']) && $_FILES['img']['tmp_name'] != '') {
 				$stmt->bindParam(':imgpath', $fname, PDO::PARAM_STR);
 				//delete old image 
 			    $imagePath = "C:/xampp/htdocs/blog_site/assets/img/".$oldFilename;
@@ -848,46 +872,38 @@ Class Action {
             // execute query
             $update = $stmt->execute();
 			if ($update) {
+				//"C:/Temp/logs/errors.log"				
 				header("Content-Type: application/json");
+				$status_string = date('m-d-Y h:i:s') . " | Post updated | " . $name . ". \n";
+				error_log($status_string, 3, LOGS);
 				return json_encode(array('status'=>1, 'id'=>$id, 'message'=>"Post updated succesfully",
 				                         'url'=>"//localhost:8080/blog_site/admin/index.php?page=preview_post&id=".$id.""));
+										 
 			} else {
 				header("Content-Type: application/json");
 				return json_encode(array('status'=>0, 'message'=>'Can\'t update post. Please try again.'));
 			}
+		}		
+		if ($stmt === null) { 
+			throw new Exception("Internal error can't insert/update. ");
+			header("Content-Type: application/json");
+			return json_encode(array('status'=>5, 'url'=>'./500.php'));
+			//header("Location: ../500.php");
 		}
+		//handle errors and exceptions
+	    } catch (Exception $e) {
+		    $this->handleException($e);
+			header("Content-Type: application/json");
+			return json_encode(array('status'=>5, 'url'=>'./500.php'));
+	
+	    } catch (Error $e) {
+		    $this->handleError($e);	
+			header("Content-Type: application/json");
+			return json_encode(array('status'=>5, 'url'=>'./500.php'));
+	    }
 		$this->db = null;
-		
 	}
 
-}
-
-
-} catch (PDOException $e) {
-	$Errors = $e->getMessage();
-	$Errors = "Data can't be retrieved";
-	// print "An Exception occurred. Message: " . $e->getMessage();
-	//print "The system is busy please again try later";
-	//$date = date('m.d.y h:i:s');                
-	//$eMessage = $date . " | Exception Error | ,"  . $errormessage . ". |\n";
-	// error_log($eMessage,3,ERROR_LOG);
-	// e-mail support person to alert there is a problem
-	//error_log("Date/Time: $date - Exception Error, Check error log for
-	//details", 1, kalukav55@gmail.com.com, "Subject: Exception Error \nFrom:
-	//Error Log <kalukav55@gmail.com>" . "\r\n");
-
-} catch (PDOError $e) {
-	$Errors = $e->getMessage();
-	$Errors = "Data cannot be retrieved";
-	// print "An Error occurred. Message: " . $e->getMessage();
-	// print "The system is busy please try later";
-	// $date = date('m.d.y h:i:s');        
-	 //$eMessage = $date . " | Error |  , " . $errormessage . ". |\n";
-	// error_log($eMessage,3,ERROR_LOG);
-	// e-mail support person to alert there is a problem
-	// error_log("Date/Time: $date - Error, Check error log for
-	//", 1, kalukav55@gmail.com, "Subject: Error \nFrom: Error Log
-	// <kalukav55@gmail.com>" . "\r\n");
-	//mail($to, $subject, $message);
 
 }
+
