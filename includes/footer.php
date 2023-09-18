@@ -16,7 +16,6 @@ $sql = "SELECT p.*, a.profile_picture, c.name AS category, DATE_FORMAT(p.date_pu
         ORDER BY date(p.date_published) DESC LIMIT 5";
 $result = $conn->query($sql);
 $error = $conn->errorInfo()[2];
-
   //$qry = $conn->query("SELECT * from category where status = 1"); 
   while($row=$result->fetch()) {
 

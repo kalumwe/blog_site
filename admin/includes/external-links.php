@@ -1,6 +1,8 @@
 
 <!-- css -->
-      
+        <!-- Favicons -->
+        <link href="../assets/img/favicon.ico" rel="icon">
+        <link href="../assets/img/favicon.ico" rel="apple-touch-icon">
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <link href="css/my_styles.css" rel="stylesheet" />
@@ -51,8 +53,7 @@
     }
         </style>
 
-<!-- js -->
-        
+<!-- js -->       
         <script src="js/jquery.min.js"></script>
         <script src="./assets/jquery.easing/jquery.easing.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -86,7 +87,6 @@ function openModal(item_id) {
 
 
 }
-
 
 function openModalConf(item_id) {
     var Url = "./includes/ajax.php?action=publish_post&id=" + item_id;

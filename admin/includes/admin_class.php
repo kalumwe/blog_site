@@ -31,9 +31,20 @@ Class Action {
 	function __destruct() {
 	    $this->db = null;
 	}
-     
+   
+   //date format 
    private function date() {
 	return date('M-D-Y h:i:s');
+   }
+
+   //create crud action logs
+   private function actionLogs($status_string) {
+	   return error_log($status_string, 3, LOGS);
+   }
+
+   //create error logs
+   private function errorLogs($status_string) {
+	  return error_log($status_string, 3, ERROR_LOG);
    }
 
 	private function handleException($e) {
@@ -679,7 +690,7 @@ Class Action {
 			$oldFilename = $row['profile_picture'];
 			
 			//$update  = $this->db->query("UPDATE author set".$data." , date_published='".date('Y-m-d H:i')."' WHERE id=".$id);
-			$sql = "UPDATE authors SET first_name=:fname, last_name=:lname, profile_picture=:pic, updated_at=:pdate WHERE  id=:id";
+			$sql = "UPDATE author SET first_name=:fname, last_name=:lname, profile_picture=:pic, updated_at=:pdate WHERE  id=:id";
 			$stmt = $this->db->prepare($sql);
 			if (isset($_FILES['img']['tmp_name']) && $_FILES['img']['tmp_name'] != '') {
 				$stmt->bindParam(':pic', $fname, PDO::PARAM_STR);
@@ -900,7 +911,7 @@ Class Action {
 				//"C:/Temp/logs/errors.log"				
 				header("Content-Type: application/json");
 				$status_string = $this->date() . " | Post updated | " . $name . ". \n";
-				error_log($status_string, 3, LOGS);
+				$this->actionLogs($status_string);
 				return json_encode(array('status'=>1, 'id'=>$id, 'message'=>"Post updated succesfully",
 				                         'url'=>"//localhost:8080/blog_site/admin/index.php?page=preview_post&id=".$id.""));
 										 

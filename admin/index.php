@@ -65,7 +65,7 @@ $imageDir = './images/';
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
-        <meta name="author" content="" />
+        <meta name="Kalumba Mweshi" content="" />
         <title>Dashboard Admin </title>
         <?php include'includes/external-links.php' ?>
          
