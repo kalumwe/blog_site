@@ -424,3 +424,47 @@
         </div>
       </div>
     </section><!-- End Lifestyle Category Section -->
+    
+    <!-- ======= OTHER Section ======= -->
+    <section class="category-section">
+      <div class="container" data-aos="fade-up">
+        <div class="section-header d-flex justify-content-between align-items-center mb-5">
+          <h2>Other News</h2>
+        </div>
+        <?php 
+        $url = 'http://feeds.bbci.co.uk/news/world/rss.xml'; //BBC
+            //$url = 'http://rss.cnn.com/rss/edition.rss'; //CNN
+        $feed = simplexml_load_file($url, 'SimpleXMLIterator');
+        $filtered = new LimitIterator($feed->channel->item, 1 , 1);
+        foreach ($filtered as $item) {
+            $image = null;
+            // Extract the image URL if available
+            // if ($item->enclosure) {
+            //  $image = $item->image['url'];
+         //  }
+       ?>
+          <div class="row">
+          <div class="col-md-9">
+            <div class="d-lg-flex post-entry-2" data-id="">
+              <a href="<?= htmlentities($item->link) ?>" target="_blank" class="me-4 thumbnail mb-4 mb-lg-0 d-inline-block">
+                <img src="assets/img/bbc2.jpg" alt="" class="img-fluid">
+              </a>
+              <div>
+                <div class="post-meta"><span class="date">Other News</span>
+                 <span class="mx-1">&bullet;</span> <span><?php $date = new DateTime($item->pubDate);
+                   $date->setTimezone(new DateTimeZone('Africa/Lusaka'));
+                   $offset = $date->getOffset();
+                   $timezone = ($offset == 28800) ?: ' CAT ' ; 
+                   //$timezone = ($offset == -14400) ? ' EDT' : ' EST'; 
+                   echo $date->format('M j, Y, g:ia') . $timezone; ?></span>
+                 </div>
+                <h3><a href="<?= htmlentities($item->link) ?>" target="_blank"><?= htmlentities($item->title)?></a></h3>
+                    <p class=""><?= htmlentities($item->description) ?></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <?php }  ?>
+          </div>
+    </section><!-- End Other Section -->
+

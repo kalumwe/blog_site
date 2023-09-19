@@ -4,6 +4,9 @@
 ob_start();
 session_start();
 
+if(empty($_GET['search_post']) || !isset($_GET['search_post'])) {
+  header("Location: http://localhost:8080/blog_site/index.php");
+}
 //defne location for error logs file
 define('ERROR_LOG','C:/Temp/logs/blog_errors.log');
 
