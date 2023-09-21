@@ -37,7 +37,7 @@
          </div>
 
          <div class="form mt-5">
-          <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+          <form action="forms/contact.php" method="post" role="form" class="php-email-form" id= "php-email-form">
             <div class="row">
               <div class="form-group col-md-6">
                 <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" >
